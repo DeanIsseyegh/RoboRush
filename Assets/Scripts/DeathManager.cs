@@ -21,7 +21,7 @@ public class DeathManager : MonoBehaviour
 
     public void Kill(int healthChange, float scoreChange, bool withSound = true)
     {
-        scorePopupManager.showScorePopup(gameObject.transform, scoreChange);
+        scorePopupManager.ShowScorePopup(gameObject.transform, scoreChange);
         if (withSound) audioSource.PlayOneShot(deathSound);
         GameObject deathParticle = Instantiate(this.deathParticle, transform.position, transform.rotation);
         ui.UpdateHealth(healthChange);

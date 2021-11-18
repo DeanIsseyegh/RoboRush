@@ -12,12 +12,8 @@ public class SpawnManager : MonoBehaviour
     public GameObject[] cloudPrefabs;
     
     private float startDelay = 0f;
-    private float enemySpawnInterval = 8f;
-    private float flyingEnemySpawnInterval = 8f;
-    private float obstacleSpawnInterval = 6f;
     private float cloudSpawnInterval = 2f;
-    private float enemySpawnRandomBuffer = 6f;
-    private float obstacleSpawnRandomBuffer = 5f;
+    private float enemySpawnRandomBuffer = 7f;
     private float cloudSpawnRandomBuffer = 2f;
     private float startSpawnPosX = 40f;
     private float startSpawnPosY = 6.5f;

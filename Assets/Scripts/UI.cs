@@ -28,7 +28,7 @@ public class UI : MonoBehaviour
     public void UpdateHealth(int amount)
     {
         var healthIcon = GameObject.Find("Heart" + health);
-        if (healthIcon) healthIcon.SetActive(false);
+        if (amount < 0 && healthIcon) healthIcon.SetActive(false);
         health += amount;
     }
 

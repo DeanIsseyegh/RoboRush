@@ -9,7 +9,7 @@ public class ScorePopupManager : MonoBehaviour
     public GameObject scorePrefab;
     private float scorePopupLength = 3f;
 
-    internal void showScorePopup(Transform transform, float scoreChange)
+    internal void ShowScorePopup(Transform transform, float scoreChange)
     {
         GameObject scoreIndicator = Instantiate(scorePrefab, transform.position, new Quaternion());
         TextMeshPro textMeshPro = scoreIndicator.GetComponentInChildren<TextMeshPro>();

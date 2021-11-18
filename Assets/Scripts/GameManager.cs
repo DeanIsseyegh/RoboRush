@@ -10,19 +10,18 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverScreenUi;
 
     public GameObject spawnManagerObj;
+    public GameObject difficultyManagerPopupObj;
     public GameObject playerObj;
     public GameObject groundObj;
     public GameObject initalCloudsObj;
     
     private PlayerController playerController;
     private SpawnManager spawnManager;
+    private DifficultyPopupManager difficultyPopupManager;
     private MoveLeft moveGroundLeft;
     private MoveLeft moveCloudsLeft;
 
     private UI ui;
-
-    private float timeSinceLastDifficultyInc = 0f;
-    private float difficultyIncreaseInterval = 10f;
     
     // Start is called before the first frame update
     void Start()
@@ -32,19 +31,11 @@ public class GameManager : MonoBehaviour
         playerController = playerObj.GetComponent<PlayerController>();
         moveGroundLeft = groundObj.GetComponent<MoveLeft>();
         moveCloudsLeft = initalCloudsObj.GetComponent<MoveLeft>();
+        difficultyPopupManager = difficultyManagerPopupObj.GetComponent<DifficultyPopupManager>();
 
         titleScreenUi.SetActive(true);
         inGameUi.SetActive(false);
         gameOverScreenUi.SetActive(false);
-    }
-
-    private void Update()
-    {
-        if (timeSinceLastDifficultyInc > difficultyIncreaseInterval)
-        {
-            timeSinceLastDifficultyInc = 0;
-            spawnManager.IncreaseDifficulty(1);
-        }
     }
 
     public void BeginGame()
@@ -57,6 +48,7 @@ public class GameManager : MonoBehaviour
         moveCloudsLeft.StartGame();
         spawnManager.StartSpawning();
         playerController.StartGame();
+        difficultyPopupManager.StartGame();
     }
 
     public void EndGame()
@@ -73,6 +65,7 @@ public class GameManager : MonoBehaviour
         moveCloudsLeft.StopGame();
         spawnManager.StopSpawning();
         playerController.StopGame();
+        difficultyPopupManager.StopGame();
     }
 
     public void RestartGame()
