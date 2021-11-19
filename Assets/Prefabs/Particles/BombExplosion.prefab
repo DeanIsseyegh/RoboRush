@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 19861012}
   - component: {fileID: 19969578}
   m_Layer: 0
-  m_Name: FX_Fireworks_Yellow_Large
+  m_Name: BombExplosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

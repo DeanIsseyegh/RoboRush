@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     
     private PlayerController playerController;
     private SpawnManager spawnManager;
-    private DifficultyPopupManager difficultyPopupManager;
+    private DifficultyManager difficultyPopupManager;
     private MoveLeft moveGroundLeft;
     private MoveLeft moveCloudsLeft;
 
@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
         playerController = playerObj.GetComponent<PlayerController>();
         moveGroundLeft = groundObj.GetComponent<MoveLeft>();
         moveCloudsLeft = initalCloudsObj.GetComponent<MoveLeft>();
-        difficultyPopupManager = difficultyManagerPopupObj.GetComponent<DifficultyPopupManager>();
+        difficultyPopupManager = difficultyManagerPopupObj.GetComponent<DifficultyManager>();
 
         titleScreenUi.SetActive(true);
         inGameUi.SetActive(false);
@@ -53,8 +53,7 @@ public class GameManager : MonoBehaviour
 
     public void EndGame()
     {
-        DestroyAll(GameObject.FindGameObjectsWithTag("Enemy"));
-        DestroyAll(GameObject.FindGameObjectsWithTag("Obstacle"));
+        DeathManager.KillAll();
 
         titleScreenUi.SetActive(false);
         inGameUi.SetActive(false);
@@ -71,14 +70,6 @@ public class GameManager : MonoBehaviour
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
-    private static void DestroyAll(GameObject[] gameObjects)
-    {
-        foreach (GameObject toDestroy in gameObjects)
-        {
-            Destroy(toDestroy);
-        }
     }
 
 }

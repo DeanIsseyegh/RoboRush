@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 
     public GameObject laser;
     public GameObject barrelExplosion;
+    public GameObject invincibleIndicator;
     public ParticleSystem dirtSplatter;
     private GameManager gameManager;
 
@@ -37,6 +38,11 @@ public class PlayerController : MonoBehaviour
     private float timeSinceLastAttack = 999;
     private float attackReloadTime = 2.5f;
 
+    private bool isInvincible = false;
+    private bool isInvincibleEndingTriggered = false;
+    private float invincibleTimeLeft = 0f;
+    private Coroutine invincibleEndingCo;
+
     private SkinnedMeshRenderer skinMeshRenderers;
 
     void Start()
@@ -63,6 +69,7 @@ public class PlayerController : MonoBehaviour
     {
         if (isInGame)
         {
+            UpdateInvincibility();
             ControlPlayerJumping();
             ControlPlayerAttack();
             ControlPlayerXMovement();
@@ -71,6 +78,34 @@ public class PlayerController : MonoBehaviour
             UpdateScoreOverTime();
             CheckForGameOver();
         }
+    }
+
+    internal void UpdateInvincibility()
+    {
+        if (isInvincible)
+        {
+            invincibleTimeLeft -= Time.deltaTime;
+            if (!isInvincibleEndingTriggered)
+            {
+                invincibleIndicator.SetActive(true);
+                if (invincibleTimeLeft < 1f)
+                {
+                    isInvincibleEndingTriggered = true;
+                    invincibleEndingCo = StartCoroutine(StartInvincibilityEnding());
+                }
+            }
+        }
+    }
+
+    internal void MakeInvincible(float invincibleTime)
+    {
+        if (invincibleEndingCo != null)
+        {
+            StopCoroutine(invincibleEndingCo);
+            isInvincibleEndingTriggered = false;
+        }
+        isInvincible = true;
+        invincibleTimeLeft = invincibleTime;
     }
 
     private void ControlDirtSplatter()
@@ -167,10 +202,17 @@ public class PlayerController : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Obstacle") || collision.gameObject.CompareTag("Enemy"))
         {
-            StartCoroutine("IndicateHurt");
-            audioSource.PlayOneShot(playerHurtSound);
             DeathManager deathManager = collision.gameObject.GetComponent<DeathManager>();
-            deathManager.Kill(-1, -50);
+            if (isInvincible)
+            {
+                deathManager.Kill(0, 50);
+            }
+            else
+            {
+                StartCoroutine("IndicateHurt");
+                audioSource.PlayOneShot(playerHurtSound);
+                deathManager.Kill(-1, -50);
+            }
         }
     }
 
@@ -205,5 +247,22 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(flashTime);
             skinMeshRenderers.enabled = true;
         }
+    }
+
+    private IEnumerator StartInvincibilityEnding()
+    {
+        float flashTime = 0.1f;
+        float noOfFlashes = 10;
+        for (int i = 0; i < noOfFlashes; i++)
+        {
+            yield return new WaitForSeconds(flashTime);
+            invincibleIndicator.SetActive(false);
+            yield return new WaitForSeconds(flashTime);
+            invincibleIndicator.SetActive(true);
+        }
+        isInvincible = false;
+        isInvincibleEndingTriggered = false;
+        invincibleIndicator.SetActive(false);
+        invincibleTimeLeft = 0;
     }
 }

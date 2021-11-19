@@ -31,4 +31,31 @@ public class DeathManager : MonoBehaviour
         Destroy(gameObject);
     }
 
+    public static void KillAllWithEffectsButNoSound()
+    {
+        DestroyAllWithEffects(GameObject.FindGameObjectsWithTag("Enemy"));
+        DestroyAllWithEffects(GameObject.FindGameObjectsWithTag("Obstacle"));
+    }
+
+    private static void DestroyAllWithEffects(GameObject[] gameObjects)
+    {
+        foreach (GameObject toDestroy in gameObjects)
+        {
+            toDestroy.GetComponent<DeathManager>().Kill(0, 50f, false);
+        }
+    }
+
+    public static void KillAll() {
+        DestroyAll(GameObject.FindGameObjectsWithTag("Enemy"));
+        DestroyAll(GameObject.FindGameObjectsWithTag("Obstacle"));
+    }
+
+    private static void DestroyAll(GameObject[] gameObjects)
+    {
+        foreach (GameObject toDestroy in gameObjects)
+        {
+            Destroy(toDestroy);
+        }
+    }
+
 }

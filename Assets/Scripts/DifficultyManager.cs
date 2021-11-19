@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DifficultyPopupManager : MonoBehaviour
+public class DifficultyManager : MonoBehaviour
 {
     public GameObject difficultyPopupPrefab;
 
@@ -25,20 +25,18 @@ public class DifficultyPopupManager : MonoBehaviour
     {
         if (isInGame)
         {
-        timeSinceLastDifficultyInc += Time.deltaTime;
-        if (timeSinceLastDifficultyInc > difficultyIncreaseInterval)
-        {
-            Debug.Log("increasing difficulty from gameManager");
-            timeSinceLastDifficultyInc = 0;
-            spawnManager.IncreaseDifficulty(1);
-            ShowDifficultyPopup(player.transform);
-        }
+            timeSinceLastDifficultyInc += Time.deltaTime;
+            if (timeSinceLastDifficultyInc > difficultyIncreaseInterval)
+            {
+                timeSinceLastDifficultyInc = 0;
+                spawnManager.IncreaseDifficulty(1);
+                ShowDifficultyPopup(player.transform);
+            }
         }
     }
 
     internal void ShowDifficultyPopup(Transform popupTransform)
     {
-        Debug.Log("SHOWING DIFFICULTYH");
         GameObject difficultyPopup = Instantiate(difficultyPopupPrefab, popupTransform.position, new Quaternion());
         Destroy(difficultyPopup, difficultyPopupLength);
         difficultyPopup.transform.position = popupTransform.position;
