@@ -15,7 +15,7 @@ public class UI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        scoreText.text = "Score: " + score;
+        scoreText.text = "Score:  " + score;
         healthText.text = "Health: ";
     }
 
@@ -34,7 +34,7 @@ public class UI : MonoBehaviour
 
     public void UpdateGameOverScore()
     {
-        gameOverScoreText.text = "Score: " + (long)score;
+        gameOverScoreText.text = "Score:  " + (long)score;
     }
 
 

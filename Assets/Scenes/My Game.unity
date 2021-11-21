@@ -2797,7 +2797,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &904008244
 Transform:
   m_ObjectHideFlags: 0
@@ -5161,6 +5161,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3476026564087310513, guid: 48937a8b1aa3f8542b064711b870fe92,
         type: 3}
+      propertyPath: missle
+      value: 
+      objectReference: {fileID: 2373690895645651671, guid: f921a3e8cf1c1c549adf6e7e08fdd6a6,
+        type: 3}
+    - target: {fileID: 3476026564087310513, guid: 48937a8b1aa3f8542b064711b870fe92,
+        type: 3}
       propertyPath: particle
       value: 
       objectReference: {fileID: 3304549824330756052, guid: cb63498603ca62644bafb84531e13377,
@@ -5211,6 +5217,16 @@ PrefabInstance:
       propertyPath: invincibleIndicator
       value: 
       objectReference: {fileID: 542209683}
+    - target: {fileID: 3476026564087310513, guid: 48937a8b1aa3f8542b064711b870fe92,
+        type: 3}
+      propertyPath: playerLaserShootSound
+      value: 
+      objectReference: {fileID: 8300000, guid: dc028d92bd81f4023ae9b67676dad909, type: 3}
+    - target: {fileID: 3476026564087310513, guid: 48937a8b1aa3f8542b064711b870fe92,
+        type: 3}
+      propertyPath: playerMissileShootSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 9c87f285d32fa4569b77ddf3a7e6df5e, type: 3}
     - target: {fileID: 4736360528207832765, guid: 48937a8b1aa3f8542b064711b870fe92,
         type: 3}
       propertyPath: m_Name

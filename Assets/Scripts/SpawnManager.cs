@@ -16,7 +16,7 @@ public class SpawnManager : MonoBehaviour
     private float cloudSpawnInterval = 2f;
     private float cloudSpawnRandomBuffer = 2f;
 
-    private System.Func<int, float> EnemySpawnInterval = (difficulty) => Random.Range(1f, 7f / difficulty);
+    private System.Func<int, float> EnemySpawnInterval = (difficulty) => Random.Range(2f, 9f - difficulty);
 
     private System.Func<float> EnemyDroneSpawnPosY = () => Random.Range(3f, 8f);
     private System.Func<float> FlyingEnemySpawnPosY = () => Random.Range(6.5f, 16.5f);

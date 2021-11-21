@@ -33,11 +33,11 @@ public class DeathManager : MonoBehaviour
 
     public static void KillAllWithEffectsButNoSound()
     {
-        DestroyAllWithEffects(GameObject.FindGameObjectsWithTag("Enemy"));
-        DestroyAllWithEffects(GameObject.FindGameObjectsWithTag("Obstacle"));
+        DestroyAllWithEffectsButNoSound(GameObject.FindGameObjectsWithTag("Enemy"));
+        DestroyAllWithEffectsButNoSound(GameObject.FindGameObjectsWithTag("Obstacle"));
     }
 
-    private static void DestroyAllWithEffects(GameObject[] gameObjects)
+    private static void DestroyAllWithEffectsButNoSound(GameObject[] gameObjects)
     {
         foreach (GameObject toDestroy in gameObjects)
         {
@@ -48,6 +48,7 @@ public class DeathManager : MonoBehaviour
     public static void KillAll() {
         DestroyAll(GameObject.FindGameObjectsWithTag("Enemy"));
         DestroyAll(GameObject.FindGameObjectsWithTag("Obstacle"));
+        DestroyAll(GameObject.FindGameObjectsWithTag("Powerup"));
     }
 
     private static void DestroyAll(GameObject[] gameObjects)

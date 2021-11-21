@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
 
     public GameObject laser;
+    public GameObject missle;
     public GameObject barrelExplosion;
     public GameObject invincibleIndicator;
     public ParticleSystem dirtSplatter;
@@ -14,7 +15,8 @@ public class PlayerController : MonoBehaviour
     private AudioSource audioSource;
     private AudioSource wheelsAudioSource;
     [SerializeField] private AudioClip playerHurtSound;
-    [SerializeField] private AudioClip playerShootSound;
+    [SerializeField] private AudioClip playerLaserShootSound;
+    [SerializeField] private AudioClip playerMissileShootSound;
     [SerializeField] private AudioClip playerJumpSound;
     [SerializeField] private AudioClip playerDeathSound;
 
@@ -34,9 +36,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float leftXBoundary = 5.2f;
     [SerializeField] private float rightXBoundary = 24.7f;
     private float yBoundary = 0.5f;
-    private float playerAttackLength = 0.25f;
-    private float timeSinceLastAttack = 999;
-    private float attackReloadTime = 2.5f;
+
+    private float laserAttackLength = 0.25f;
+    private float timeSinceLastLaserAttack = 999;
+    private float laserAttackReloadTime = 2.5f;
+
+    private float timeSinceLastMissileAttack = 999;
+    private float missileAttackReloadTime = 1.25f;
 
     private bool isInvincible = false;
     private bool isInvincibleEndingTriggered = false;
@@ -156,11 +162,18 @@ public class PlayerController : MonoBehaviour
 
     private void ControlPlayerAttack()
     {
-        timeSinceLastAttack += Time.deltaTime;
-        LaserBar.instance.RefillLaserAmmo(timeSinceLastAttack / attackReloadTime);
-        if (Input.GetKeyDown(KeyCode.Mouse0) && timeSinceLastAttack > attackReloadTime)
+        timeSinceLastLaserAttack += Time.deltaTime;
+        LaserBar.instance.RefillLaserAmmo(timeSinceLastLaserAttack / laserAttackReloadTime);
+        if (Input.GetKeyDown(KeyCode.Mouse0) && timeSinceLastLaserAttack > laserAttackReloadTime)
         {
-            StartCoroutine(StartPlayerAttack());
+            StartCoroutine(StartPlayerLaserAttack());
+        }
+
+        timeSinceLastMissileAttack += Time.deltaTime;
+        MissileBar.instance.RefillAmmo(timeSinceLastMissileAttack / missileAttackReloadTime);
+        if (Input.GetKeyDown(KeyCode.Mouse1) && timeSinceLastMissileAttack > missileAttackReloadTime)
+        {
+            StartPlayerMissileAttack();
         }
     }
 
@@ -200,9 +213,14 @@ public class PlayerController : MonoBehaviour
             jumpCounter = 0;
         }
 
-        if (collision.gameObject.CompareTag("Obstacle") || collision.gameObject.CompareTag("Enemy"))
+
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Obstacle") || other.gameObject.CompareTag("Enemy"))
         {
-            DeathManager deathManager = collision.gameObject.GetComponent<DeathManager>();
+            DeathManager deathManager = other.gameObject.GetComponent<DeathManager>();
             if (isInvincible)
             {
                 deathManager.Kill(0, 50);
@@ -226,13 +244,22 @@ public class PlayerController : MonoBehaviour
         return new Vector3(vector3.x, y, vector3.z);
     }
 
-    private IEnumerator StartPlayerAttack()
+    private void StartPlayerMissileAttack()
     {
-        timeSinceLastAttack = 0;
+        timeSinceLastMissileAttack = 0;
+        GameObject missileShot = Instantiate(missle);
+        audioSource.PlayOneShot(playerMissileShootSound);
+        MissileBar.instance.UseAmmo();
+    }
+
+
+    private IEnumerator StartPlayerLaserAttack()
+    {
+        timeSinceLastLaserAttack = 0;
         GameObject laserShot = Instantiate(laser);
-        audioSource.PlayOneShot(playerShootSound);
+        audioSource.PlayOneShot(playerLaserShootSound);
         LaserBar.instance.UseLaserAmmo();
-        yield return new WaitForSeconds(playerAttackLength);
+        yield return new WaitForSeconds(laserAttackLength);
         Destroy(laserShot);
     }
 

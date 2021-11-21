@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3081807823306395874}
-  - component: {fileID: 3081807823306395903}
   - component: {fileID: 3081807823306395875}
   - component: {fileID: -9006191715970864836}
   - component: {fileID: -6637149441817096556}
+  - component: {fileID: 3081807823306395903}
   m_Layer: 0
   m_Name: Obstacle
   m_TagString: Obstacle
@@ -35,19 +35,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &3081807823306395903
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3081807823306395902}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.68086004, y: 1, z: 0.77037406}
-  m_Center: {x: 0.0041410923, y: 0, z: 0.0051529408}
 --- !u!114 &3081807823306395875
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,8 +81,19 @@ MonoBehaviour:
   deathParticle: {fileID: 3304549824316897030, guid: cb63498603ca62644bafb84531e13377,
     type: 3}
   deathSound: {fileID: 8300000, guid: c40d1b26de66d4a3a8cc9b58a973e3c5, type: 3}
-  scorePrefab: {fileID: 641257881811600116, guid: e2220675c831c7d4289d012a60efbe43,
-    type: 3}
+--- !u!65 &3081807823306395903
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3081807823306395902}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.68086004, y: 1, z: 0.77037406}
+  m_Center: {x: 0.0041410923, y: 0, z: 0.0051529408}
 --- !u!1001 &2211433507298182389
 PrefabInstance:
   m_ObjectHideFlags: 0

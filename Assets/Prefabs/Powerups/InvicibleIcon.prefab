@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 3969818417978583484}
   m_Layer: 0
   m_Name: InvicibleIcon
-  m_TagString: Untagged
+  m_TagString: Powerup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -125,7 +125,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29a1c3adebf28c146a504d2f6be80fb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateSpeed: 360
+  rotateYSpeed: 360
+  rotateZSpeed: 0
 --- !u!65 &3969818417978583484
 BoxCollider:
   m_ObjectHideFlags: 0
