@@ -22,8 +22,11 @@ public class GameManager : MonoBehaviour
     private MoveLeft moveCloudsLeft;
 
     private UI ui;
+
+    [SerializeField] private AudioSource[] audioSources;
+    [SerializeField] private GameObject pauseButton;
+    [SerializeField] private GameObject unPauseButton;
     
-    // Start is called before the first frame update
     void Start()
     {
         ui = GameObject.Find("GameUI").GetComponent<UI>();
@@ -70,6 +73,28 @@ public class GameManager : MonoBehaviour
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void PauseGame()
+    {
+        Time.timeScale = 0;
+        foreach (var audioSource in audioSources)
+        {
+            audioSource.Pause();
+        }
+        pauseButton.SetActive(false);
+        unPauseButton.SetActive(true);
+    }
+    
+    public void UnpauseGame()
+    {
+        Time.timeScale = 1;
+        foreach (var audioSource in audioSources)
+        {
+            audioSource.Play();
+        }
+        pauseButton.SetActive(true);
+        unPauseButton.SetActive(false);
     }
 
 }

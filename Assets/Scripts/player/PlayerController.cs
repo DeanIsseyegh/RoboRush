@@ -12,8 +12,8 @@ public class PlayerController : MonoBehaviour
     public ParticleSystem dirtSplatter;
     private GameManager gameManager;
 
-    private AudioSource audioSource;
-    private AudioSource wheelsAudioSource;
+    [SerializeField] private AudioSource playerSoundEffectsSource;
+    [SerializeField] private AudioSource wheelsAudioSource;
     [SerializeField] private AudioClip playerHurtSound;
     [SerializeField] private AudioClip playerLaserShootSound;
     [SerializeField] private AudioClip playerMissileShootSound;
@@ -57,8 +57,6 @@ public class PlayerController : MonoBehaviour
         animator = GameObject.Find("PlayerModel").GetComponent<Animator>();
         ui = GameObject.Find("GameUI").GetComponent<UI>();
         playerRb = GetComponent<Rigidbody>();
-        audioSource = GameObject.Find("Main Camera").GetComponent<AudioSource>();
-        wheelsAudioSource = GameObject.Find("PlayerWheels").GetComponent<AudioSource>();
         Physics.gravity = gravity;
         dirtSplatter.Stop();
         skinMeshRenderers = GetComponentInChildren<SkinnedMeshRenderer>();
@@ -128,7 +126,7 @@ public class PlayerController : MonoBehaviour
 
     public void StopGame()
     {
-        audioSource.PlayOneShot(playerDeathSound);
+        playerSoundEffectsSource.PlayOneShot(playerDeathSound);
         isInGame = false;
         animator.SetTrigger("End Game");
         wheelsAudioSource.Stop();
@@ -155,7 +153,7 @@ public class PlayerController : MonoBehaviour
         {
             if (jumpCounter == 1) playerRb.velocity = new Vector3(playerRb.velocity.x, 0, 0); //to allow double jumping
             jumpCounter++;
-            audioSource.PlayOneShot(playerJumpSound);
+            playerSoundEffectsSource.PlayOneShot(playerJumpSound);
             playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
     }
@@ -228,7 +226,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 StartCoroutine("IndicateHurt");
-                audioSource.PlayOneShot(playerHurtSound);
+                playerSoundEffectsSource.PlayOneShot(playerHurtSound);
                 deathManager.Kill(-1, -50);
             }
         }
@@ -248,7 +246,7 @@ public class PlayerController : MonoBehaviour
     {
         timeSinceLastMissileAttack = 0;
         GameObject missileShot = Instantiate(missle);
-        audioSource.PlayOneShot(playerMissileShootSound);
+        playerSoundEffectsSource.PlayOneShot(playerMissileShootSound);
         MissileBar.instance.UseAmmo();
     }
 
@@ -257,7 +255,7 @@ public class PlayerController : MonoBehaviour
     {
         timeSinceLastLaserAttack = 0;
         GameObject laserShot = Instantiate(laser);
-        audioSource.PlayOneShot(playerLaserShootSound);
+        playerSoundEffectsSource.PlayOneShot(playerLaserShootSound);
         LaserBar.instance.UseLaserAmmo();
         yield return new WaitForSeconds(laserAttackLength);
         Destroy(laserShot);
