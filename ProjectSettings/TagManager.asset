@@ -10,6 +10,7 @@ TagManager:
   - GroundParent
   - Laser
   - Powerup
+  - SFXAudioSource
   layers:
   - Default
   - TransparentFX

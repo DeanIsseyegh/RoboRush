@@ -15,7 +15,7 @@ public class DeathManager : MonoBehaviour
     private void Start()
     {
         ui = GameObject.Find("GameUI").GetComponent<UI>();
-        audioSource = GameObject.Find("Main Camera").GetComponent<AudioSource>();
+        audioSource = GameObject.Find("SoundEffects").GetComponent<AudioSource>();
         scorePopupManager = GameObject.Find("ScorePopupManager").GetComponent<ScorePopupManager>();
     }
 

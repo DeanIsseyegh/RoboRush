@@ -9,7 +9,7 @@ public abstract class Powerup : MonoBehaviour
 
     protected virtual void Start()
     {
-        audioSource = GameObject.Find("Main Camera").GetComponent<AudioSource>();
+        audioSource = GameObject.Find("SoundEffects").GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter(Collider other)

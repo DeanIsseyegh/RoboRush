@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using player;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -19,6 +20,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioClip playerMissileShootSound;
     [SerializeField] private AudioClip playerJumpSound;
     [SerializeField] private AudioClip playerDeathSound;
+    
+    [SerializeField] private PlayerControlsInput playerControlsInput;
 
     private Animator animator;
 
@@ -149,7 +152,7 @@ public class PlayerController : MonoBehaviour
 
     private void ControlPlayerJumping()
     {
-        if (jumpCounter < allowedJumps && Input.GetKeyDown(KeyCode.Space))
+        if (jumpCounter < allowedJumps && playerControlsInput.IsJumpPressed())
         {
             if (jumpCounter == 1) playerRb.velocity = new Vector3(playerRb.velocity.x, 0, 0); //to allow double jumping
             jumpCounter++;
@@ -162,14 +165,14 @@ public class PlayerController : MonoBehaviour
     {
         timeSinceLastLaserAttack += Time.deltaTime;
         LaserBar.instance.RefillLaserAmmo(timeSinceLastLaserAttack / laserAttackReloadTime);
-        if (Input.GetKeyDown(KeyCode.Mouse0) && timeSinceLastLaserAttack > laserAttackReloadTime)
+        if (playerControlsInput.IsPrimaryAttackPressed() && timeSinceLastLaserAttack > laserAttackReloadTime)
         {
             StartCoroutine(StartPlayerLaserAttack());
         }
 
         timeSinceLastMissileAttack += Time.deltaTime;
         MissileBar.instance.RefillAmmo(timeSinceLastMissileAttack / missileAttackReloadTime);
-        if (Input.GetKeyDown(KeyCode.Mouse1) && timeSinceLastMissileAttack > missileAttackReloadTime)
+        if (playerControlsInput.IsSecondaryAttackPressed() && timeSinceLastMissileAttack > missileAttackReloadTime)
         {
             StartPlayerMissileAttack();
         }
@@ -177,11 +180,11 @@ public class PlayerController : MonoBehaviour
 
     private void ControlPlayerXMovement()
     {
-        if (Input.GetKey(KeyCode.A))
+        if (playerControlsInput.IsLeftPressed())
         {
             transform.Translate(Vector3.left * speed * Time.deltaTime);
         }
-        else if (Input.GetKey(KeyCode.D))
+        else if (playerControlsInput.IsRightPressed())
         {
             transform.Translate(Vector3.right * speed * Time.deltaTime);
         }
@@ -210,8 +213,6 @@ public class PlayerController : MonoBehaviour
         {
             jumpCounter = 0;
         }
-
-
     }
 
     private void OnTriggerEnter(Collider other)

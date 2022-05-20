@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using player;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,6 +10,7 @@ public class GameManager : MonoBehaviour
     public GameObject inGameUi;
     public GameObject titleScreenUi;
     public GameObject gameOverScreenUi;
+    public GameObject pauseScreenUi;
 
     public GameObject spawnManagerObj;
     public GameObject difficultyManagerPopupObj;
@@ -26,6 +29,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioSource[] audioSources;
     [SerializeField] private GameObject pauseButton;
     [SerializeField] private GameObject unPauseButton;
+    [SerializeField] private PlayerControlsInput playerControlsInput;
+    [SerializeField] private int initialControlDisableMs = 500;
     
     void Start()
     {
@@ -39,6 +44,7 @@ public class GameManager : MonoBehaviour
         titleScreenUi.SetActive(true);
         inGameUi.SetActive(false);
         gameOverScreenUi.SetActive(false);
+        playerControlsInput.DisableInGameActions();
     }
 
     public void BeginGame()
@@ -52,6 +58,7 @@ public class GameManager : MonoBehaviour
         spawnManager.StartSpawning();
         playerController.StartGame();
         difficultyPopupManager.StartGame();
+        Task.Delay(initialControlDisableMs).ContinueWith(t=> playerControlsInput.EnableInGameActions());
     }
 
     public void EndGame()
@@ -84,6 +91,8 @@ public class GameManager : MonoBehaviour
         }
         pauseButton.SetActive(false);
         unPauseButton.SetActive(true);
+        playerControlsInput.DisableInGameActions();
+        pauseScreenUi.SetActive(true);
     }
     
     public void UnpauseGame()
@@ -95,6 +104,8 @@ public class GameManager : MonoBehaviour
         }
         pauseButton.SetActive(true);
         unPauseButton.SetActive(false);
+        playerControlsInput.EnableInGameActions();
+        pauseScreenUi.SetActive(false);
     }
 
 }
