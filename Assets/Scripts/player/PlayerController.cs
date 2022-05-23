@@ -141,6 +141,16 @@ public class PlayerController : SerializedMonoBehaviour
         wheelsAudioSource.Stop();
     }
 
+    public void PauseGame()
+    {
+        isInGame = false;
+    }
+    
+    public void UnPauseGame()
+    {
+        isInGame = true;
+    }
+
     private void CheckForGameOver()
     {
         if (IsDead()) gameManager.EndGame();

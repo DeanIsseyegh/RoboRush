@@ -96,8 +96,8 @@ public class GameManager : SerializedMonoBehaviour
         }
         pauseButton.SetActive(false);
         unPauseButton.SetActive(true);
-        _playerControlsInput.DisableInGameActions();
         pauseScreenUi.SetActive(true);
+        playerController.PauseGame();
     }
     
     public void UnpauseGame()
@@ -109,8 +109,8 @@ public class GameManager : SerializedMonoBehaviour
         }
         pauseButton.SetActive(true);
         unPauseButton.SetActive(false);
-        _playerControlsInput.EnableInGameActions();
         pauseScreenUi.SetActive(false);
+        playerController.UnPauseGame();
     }
 
 }

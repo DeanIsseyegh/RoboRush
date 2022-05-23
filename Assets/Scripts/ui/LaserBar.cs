@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class LaserBar : MonoBehaviour
 {
     public Slider laserBar;
+    public Image mobileLaserCooldown;
 
     private float maxLaser = 100;
     private float currentLaser;
@@ -28,12 +29,14 @@ public class LaserBar : MonoBehaviour
     {
         currentLaser = 0;
         laserBar.value = currentLaser;
+        mobileLaserCooldown.fillAmount = 1;
     }
 
     public void RefillLaserAmmo(float percentToRefillBy)
     {
         currentLaser = maxLaser * percentToRefillBy;
         laserBar.value = currentLaser;
+        mobileLaserCooldown.fillAmount = 1 - percentToRefillBy;
     }
 
 }
