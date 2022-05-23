@@ -1,18 +1,12 @@
-using System;
+﻿using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace player
 {
-    public class PlayerControlsInput : MonoBehaviour
+    public class PcPlayerControlsInput : MonoBehaviour, IPlayerControlsInput
     {
         [SerializeField] private MouseHoverDetector pauseButtonHoverDetector;
         private bool _isInGameActionsDisabled;
-
-        void Update()
-        {
-            // _pointerOverUI = EventSystem.current.IsPointerOverGameObject();
-        }
         
         public bool IsJumpPressed()
         {
@@ -21,11 +15,6 @@ namespace player
 
         public bool IsPrimaryAttackPressed()
         {
-            // if (_pointerOverUI)
-            // {
-                // Debug.Log("Event system over game object");
-                // return false;
-            // }
             if (pauseButtonHoverDetector.IsHoverOver()) return false;
             return IsActionPressed(() => Input.GetKeyDown(KeyCode.Mouse0));
         }

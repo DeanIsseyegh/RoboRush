@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using player;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class GameManager : SerializedMonoBehaviour
 {
     public GameObject inGameUi;
     public GameObject titleScreenUi;
@@ -29,7 +30,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioSource[] audioSources;
     [SerializeField] private GameObject pauseButton;
     [SerializeField] private GameObject unPauseButton;
-    [SerializeField] private PlayerControlsInput playerControlsInput;
+    [SerializeField] private ControlsManager controlsManager;
+    private IPlayerControlsInput _playerControlsInput;
+
+
     [SerializeField] private int initialControlDisableMs = 500;
     
     void Start()
@@ -44,7 +48,8 @@ public class GameManager : MonoBehaviour
         titleScreenUi.SetActive(true);
         inGameUi.SetActive(false);
         gameOverScreenUi.SetActive(false);
-        playerControlsInput.DisableInGameActions();
+        _playerControlsInput = controlsManager.GetControls();
+        _playerControlsInput.DisableInGameActions();
     }
 
     public void BeginGame()
@@ -58,7 +63,7 @@ public class GameManager : MonoBehaviour
         spawnManager.StartSpawning();
         playerController.StartGame();
         difficultyPopupManager.StartGame();
-        Task.Delay(initialControlDisableMs).ContinueWith(t=> playerControlsInput.EnableInGameActions());
+        Task.Delay(initialControlDisableMs).ContinueWith(t=> _playerControlsInput.EnableInGameActions());
     }
 
     public void EndGame()
@@ -91,7 +96,7 @@ public class GameManager : MonoBehaviour
         }
         pauseButton.SetActive(false);
         unPauseButton.SetActive(true);
-        playerControlsInput.DisableInGameActions();
+        _playerControlsInput.DisableInGameActions();
         pauseScreenUi.SetActive(true);
     }
     
@@ -104,7 +109,7 @@ public class GameManager : MonoBehaviour
         }
         pauseButton.SetActive(true);
         unPauseButton.SetActive(false);
-        playerControlsInput.EnableInGameActions();
+        _playerControlsInput.EnableInGameActions();
         pauseScreenUi.SetActive(false);
     }
 

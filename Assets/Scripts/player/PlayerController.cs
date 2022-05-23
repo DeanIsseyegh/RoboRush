@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using player;
+using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : SerializedMonoBehaviour
 {
 
     public GameObject laser;
@@ -21,7 +23,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioClip playerJumpSound;
     [SerializeField] private AudioClip playerDeathSound;
     
-    [SerializeField] private PlayerControlsInput playerControlsInput;
+    [SerializeField] private ControlsManager controlsManager;
+    private IPlayerControlsInput _playerControlsInput;
 
     private Animator animator;
 
@@ -33,7 +36,9 @@ public class PlayerController : MonoBehaviour
 
     private float speed = 10;
     private float jumpForce = 1000;
-    private float allowedJumps = 2;
+    [SerializeField] private int allowedJumps = 2;
+    [FormerlySerializedAs("doubleJumpCooldown")] [SerializeField] private float jumpCooldown = 0.2f;
+    private float timeSinceJump;
     private Vector3 gravity = new Vector3(0, -29.4f, 0);
     private int jumpCounter = 0;
     [SerializeField] private float leftXBoundary = 5.2f;
@@ -63,6 +68,7 @@ public class PlayerController : MonoBehaviour
         Physics.gravity = gravity;
         dirtSplatter.Stop();
         skinMeshRenderers = GetComponentInChildren<SkinnedMeshRenderer>();
+        _playerControlsInput = controlsManager.GetControls();
     }
 
     public void StartGame()
@@ -152,10 +158,15 @@ public class PlayerController : MonoBehaviour
 
     private void ControlPlayerJumping()
     {
-        if (jumpCounter < allowedJumps && playerControlsInput.IsJumpPressed())
+        timeSinceJump += Time.deltaTime;
+        if (jumpCooldown > timeSinceJump) return;
+        if (jumpCounter < allowedJumps && _playerControlsInput.IsJumpPressed())
         {
-            if (jumpCounter == 1) playerRb.velocity = new Vector3(playerRb.velocity.x, 0, 0); //to allow double jumping
+            if (jumpCounter == 1) {
+                playerRb.velocity = new Vector3(playerRb.velocity.x, 0, 0); //reset air velocity before double jump 
+            }
             jumpCounter++;
+            timeSinceJump = 0;
             playerSoundEffectsSource.PlayOneShot(playerJumpSound);
             playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
@@ -165,14 +176,14 @@ public class PlayerController : MonoBehaviour
     {
         timeSinceLastLaserAttack += Time.deltaTime;
         LaserBar.instance.RefillLaserAmmo(timeSinceLastLaserAttack / laserAttackReloadTime);
-        if (playerControlsInput.IsPrimaryAttackPressed() && timeSinceLastLaserAttack > laserAttackReloadTime)
+        if (_playerControlsInput.IsPrimaryAttackPressed() && timeSinceLastLaserAttack > laserAttackReloadTime)
         {
             StartCoroutine(StartPlayerLaserAttack());
         }
 
         timeSinceLastMissileAttack += Time.deltaTime;
         MissileBar.instance.RefillAmmo(timeSinceLastMissileAttack / missileAttackReloadTime);
-        if (playerControlsInput.IsSecondaryAttackPressed() && timeSinceLastMissileAttack > missileAttackReloadTime)
+        if (_playerControlsInput.IsSecondaryAttackPressed() && timeSinceLastMissileAttack > missileAttackReloadTime)
         {
             StartPlayerMissileAttack();
         }
@@ -180,11 +191,11 @@ public class PlayerController : MonoBehaviour
 
     private void ControlPlayerXMovement()
     {
-        if (playerControlsInput.IsLeftPressed())
+        if (_playerControlsInput.IsLeftPressed())
         {
             transform.Translate(Vector3.left * speed * Time.deltaTime);
         }
-        else if (playerControlsInput.IsRightPressed())
+        else if (_playerControlsInput.IsRightPressed())
         {
             transform.Translate(Vector3.right * speed * Time.deltaTime);
         }
