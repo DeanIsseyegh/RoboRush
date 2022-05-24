@@ -11,7 +11,7 @@ namespace player
         private void Awake()
         {
             platformSpecificControls = PCPlayerControlsInput;
-            # if UNITY_ANDROID
+            # if UNITY_ANDROID || UNITY_IOS
             platformSpecificControls = MobileControlsInput;
             # endif
         }

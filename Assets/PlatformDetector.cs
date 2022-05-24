@@ -15,7 +15,7 @@ public class PlatformDetector : MonoBehaviour
         titleMobileControlsExplanation.SetActive(false);
         pauseMobileControlsExplanation.SetActive(false);
 
-# if UNITY_ANDROID
+# if UNITY_ANDROID || UNITY_IOS
         Application.targetFrameRate = androidTargetFramerate;
         mobileControls.SetActive(true);
         titleMobileControlsExplanation.SetActive(true);
