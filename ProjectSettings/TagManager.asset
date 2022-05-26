@@ -11,6 +11,13 @@ TagManager:
   - Laser
   - Powerup
   - SFXAudioSource
+  - SpawnManager
+  - ObstaclePool
+  - EnemyPool
+  - EnemyDronePool
+  - FlyingEnemyPool
+  - InvinciblePowerupPool
+  - BombPool
   layers:
   - Default
   - TransparentFX

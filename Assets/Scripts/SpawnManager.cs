@@ -1,15 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using objectpooling;
 using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-
-    public GameObject obstaclePrefab;
-    public GameObject enemyPrefab;
-    public GameObject enemyDronePrefab;
-    public GameObject flyingEnemyPrefab;
-    public GameObject[] powerupPrefabs;
+    [field: SerializeField] public SimpleObjectPool ObstaclePool { get; private set; }
+    [SerializeField] private SimpleObjectPool enemyPool;
+    [SerializeField] private SimpleObjectPool enemyDronePool;
+    [SerializeField] private SimpleObjectPool flyingEnemyPool;
+    [SerializeField] private SimpleObjectPool[] powerupPools;
     public GameObject[] cloudPrefabs;
     
     private float startDelay = 0f;
@@ -78,33 +78,43 @@ public class SpawnManager : MonoBehaviour
 
     private void SpawnObstacle()
     {
-        Instantiate(obstaclePrefab, new Vector3(spawnPosX, 1f, 0), obstaclePrefab.transform.rotation);
+        GameObject obstaclePrefab = ObstaclePool.Get();
+        obstaclePrefab.transform.position = new Vector3(spawnPosX, 1f, 0);
+        obstaclePrefab.transform.rotation = obstaclePrefab.transform.rotation;
     }
 
     private void SpawnEnemy()
     {
-        Instantiate(enemyPrefab, new Vector3(spawnPosX, 0, 0), enemyPrefab.transform.rotation);
+        GameObject enemyPrefab = enemyPool.Get();
+        enemyPrefab.transform.position = new Vector3(spawnPosX, 0, 0);
+        enemyPrefab.transform.rotation = enemyPrefab.transform.rotation;
     }
 
     private void SpawnEnemyDrone()
     {
-        Instantiate(enemyDronePrefab, new Vector3(spawnPosX, EnemyDroneSpawnPosY(), 0), enemyPrefab.transform.rotation);
+        GameObject enemyDronePrefab = enemyDronePool.Get();
+        enemyDronePrefab.transform.position = new Vector3(spawnPosX, EnemyDroneSpawnPosY(), 0);
+        enemyDronePrefab.transform.rotation = enemyDronePrefab.transform.rotation;
     }
 
     private void SpawnFlyingEnemy()
     {
-        Instantiate(flyingEnemyPrefab, new Vector3(spawnPosX, FlyingEnemySpawnPosY(), 0), enemyPrefab.transform.rotation);
+        GameObject flyingEnemyPrefab = flyingEnemyPool.Get();
+        flyingEnemyPrefab.transform.position = new Vector3(spawnPosX, FlyingEnemySpawnPosY(), 0);
+        flyingEnemyPrefab.transform.rotation = flyingEnemyPrefab.transform.rotation;
     }    
     private void SpawnCloud()
     {
         var index = Random.Range(0, cloudPrefabs.Length);
-        Instantiate(cloudPrefabs[index], new Vector3(cloudSpawnPosX, CloudSpawnPosY(), CloudSpawnPosZ()), enemyPrefab.transform.rotation);
+        Instantiate(cloudPrefabs[index], new Vector3(cloudSpawnPosX, CloudSpawnPosY(), CloudSpawnPosZ()), cloudPrefabs[index].transform.rotation);
     }
 
     private void SpawnPowerup()
     {
-        var index = Random.Range(0, powerupPrefabs.Length);
-        Instantiate(powerupPrefabs[index], new Vector3(spawnPosX, PowerupSpawnPosY(), 0), powerupPrefabs[index].transform.rotation);
+        var index = Random.Range(0, powerupPools.Length);
+        SimpleObjectPool powerupPool = powerupPools[index];
+        GameObject powerupPrefab = powerupPool.Get();
+        powerupPrefab.transform.position = new Vector3(spawnPosX, PowerupSpawnPosY(), 0);
     }
 
 }

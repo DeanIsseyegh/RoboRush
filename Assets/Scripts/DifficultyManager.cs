@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using objectpooling;
 using UnityEngine;
 
 public class DifficultyManager : MonoBehaviour
 {
-    public GameObject difficultyPopupPrefab;
+    [SerializeField] private SimpleObjectPool difficultyPopupObjectPool;
 
     private SpawnManager spawnManager;
     private GameObject player;
@@ -14,6 +15,13 @@ public class DifficultyManager : MonoBehaviour
 
     private float timeSinceLastDifficultyInc = 0f;
     private float difficultyIncreaseInterval = 7f;
+    
+    private WaitForSeconds _popupLengthWait;
+
+    private void Awake()
+    {
+        _popupLengthWait = new WaitForSeconds(difficultyPopupLength);
+    }
 
     private void Start()
     {
@@ -37,9 +45,9 @@ public class DifficultyManager : MonoBehaviour
 
     internal void ShowDifficultyPopup(Transform popupTransform)
     {
-        GameObject difficultyPopup = Instantiate(difficultyPopupPrefab, popupTransform.position, new Quaternion());
-        Destroy(difficultyPopup, difficultyPopupLength);
+        GameObject difficultyPopup = difficultyPopupObjectPool.Get();
         difficultyPopup.transform.position = popupTransform.position;
+        StartCoroutine(difficultyPopupObjectPool.ReleaseAfterXSeconds(difficultyPopup, _popupLengthWait));
     }
 
     internal void StartGame()

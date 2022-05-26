@@ -30,6 +30,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 8.02, y: 0, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3657117287761523948}
   - {fileID: 567319208997041993}
@@ -82,6 +83,7 @@ MonoBehaviour:
   deathParticle: {fileID: 3304549824316897030, guid: cb63498603ca62644bafb84531e13377,
     type: 3}
   deathSound: {fileID: 8300000, guid: c40d1b26de66d4a3a8cc9b58a973e3c5, type: 3}
+  poolName: EnemyDronePool
 --- !u!65 &6558906101726167103
 BoxCollider:
   m_ObjectHideFlags: 0

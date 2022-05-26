@@ -1,17 +1,23 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
+using objectpooling;
 using TMPro;
 using UnityEngine;
 
 public class ScorePopupManager : MonoBehaviour
 {
-    public GameObject scorePrefab;
+    [SerializeField] private SimpleObjectPool scorePopupObjectPool;
     private float scorePopupLength = 3f;
+    private WaitForSeconds _popupLengthWait;
 
-    internal void ShowScorePopup(Transform transform, float scoreChange)
+    private void Awake()
     {
-        GameObject scoreIndicator = Instantiate(scorePrefab, transform.position, new Quaternion());
+        _popupLengthWait = new WaitForSeconds(scorePopupLength);
+    }
+
+    internal void ShowScorePopup(Transform popupTransform, float scoreChange)
+    {
+        GameObject scoreIndicator = scorePopupObjectPool.Get();
+        scoreIndicator.transform.position = popupTransform.position;
         TextMeshPro textMeshPro = scoreIndicator.GetComponentInChildren<TextMeshPro>();
         if (scoreChange < 0)
         {
@@ -22,7 +28,7 @@ public class ScorePopupManager : MonoBehaviour
             textMeshPro.color = Color.green;
             textMeshPro.SetText("+" + scoreChange);
         }
-        Destroy(scoreIndicator, scorePopupLength);
-        scoreIndicator.transform.position = transform.position;
+        StartCoroutine(scorePopupObjectPool.ReleaseAfterXSeconds(scoreIndicator, _popupLengthWait));
     }
+
 }
