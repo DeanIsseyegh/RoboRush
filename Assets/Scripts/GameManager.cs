@@ -34,7 +34,7 @@ public class GameManager : SerializedMonoBehaviour
     private IPlayerControlsInput _playerControlsInput;
 
 
-    [SerializeField] private int initialControlDisableMs = 500;
+    [SerializeField] private float initialControlDisableSecs = 0.35f;
     
     void Start()
     {
@@ -63,7 +63,13 @@ public class GameManager : SerializedMonoBehaviour
         spawnManager.StartSpawning();
         playerController.StartGame();
         difficultyPopupManager.StartGame();
-        Task.Delay(initialControlDisableMs).ContinueWith(t=> _playerControlsInput.EnableInGameActions());
+        StartCoroutine(EnableControlsWithDelay());
+    }
+
+    private IEnumerator EnableControlsWithDelay()
+    {
+        yield return new WaitForSeconds(initialControlDisableSecs);
+        _playerControlsInput.EnableInGameActions();
     }
 
     public void EndGame()

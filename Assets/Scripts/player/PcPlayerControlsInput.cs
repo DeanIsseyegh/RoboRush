@@ -6,7 +6,7 @@ namespace player
     public class PcPlayerControlsInput : MonoBehaviour, IPlayerControlsInput
     {
         [SerializeField] private MouseHoverDetector pauseButtonHoverDetector;
-        private bool _isInGameActionsDisabled;
+        private bool _isInGameActionsDisabled = true;
         
         public bool IsJumpPressed()
         {
