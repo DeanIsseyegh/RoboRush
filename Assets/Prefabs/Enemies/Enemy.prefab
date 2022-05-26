@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 2298852552524545116}
   - component: {fileID: 946897682442144364}
   - component: {fileID: 6243620978582192026}
-  - component: {fileID: 2300970351647566194}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -31,6 +30,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 8.02, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3657117287761523948}
   - {fileID: 4384031529178257970}
@@ -94,21 +94,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
-  m_Center: {x: 0.08, y: 0.76, z: 0.49}
---- !u!65 &2300970351647566194
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6117988896297572133}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 0.32, z: 0.5}
-  m_Center: {x: 1.36, y: 0.79, z: 0}
+  m_Radius: 1.15
+  m_Center: {x: 0.41, y: 0.45, z: 0.42}
 --- !u!1001 &3661975942734014388
 PrefabInstance:
   m_ObjectHideFlags: 0
