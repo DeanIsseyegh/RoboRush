@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerLaser : PlayerProjectile
 {
     [SerializeField] private float playerXOffset = 0.5f;
-    [SerializeField] private int playerYOffset = 2;
+    [SerializeField] private float playerYOffset = 2;
     [SerializeField] private float playerZOffset = -0.2f;
 
     protected override void Start()

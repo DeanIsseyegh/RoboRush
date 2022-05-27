@@ -26,7 +26,7 @@ public class PlayerController : SerializedMonoBehaviour
     [SerializeField] private ControlsManager controlsManager;
     private IPlayerControlsInput _playerControlsInput;
 
-    private Animator animator;
+    [SerializeField] private Animator animator;
 
     private bool isInGame = false;
 
@@ -62,7 +62,6 @@ public class PlayerController : SerializedMonoBehaviour
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        animator = GameObject.Find("PlayerModel").GetComponent<Animator>();
         ui = GameObject.Find("GameUI").GetComponent<UI>();
         playerRb = GetComponent<Rigidbody>();
         Physics.gravity = gravity;
@@ -137,6 +136,7 @@ public class PlayerController : SerializedMonoBehaviour
     {
         playerSoundEffectsSource.PlayOneShot(playerDeathSound);
         isInGame = false;
+        animator.applyRootMotion = true;
         animator.SetTrigger("End Game");
         wheelsAudioSource.Stop();
     }
@@ -179,6 +179,7 @@ public class PlayerController : SerializedMonoBehaviour
             timeSinceJump = 0;
             playerSoundEffectsSource.PlayOneShot(playerJumpSound);
             playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            animator.SetTrigger("Jump");
         }
     }
 
