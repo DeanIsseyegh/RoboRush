@@ -18,12 +18,14 @@ public class GameManager : SerializedMonoBehaviour
     public GameObject playerObj;
     public GameObject groundObj;
     public GameObject initalCloudsObj;
+    public GameObject backgroundRocks;
     
     private PlayerController playerController;
     private SpawnManager spawnManager;
     private DifficultyManager difficultyPopupManager;
     private MoveLeft moveGroundLeft;
     private MoveLeft moveCloudsLeft;
+    private MoveLeft moveRocksLeft;
 
     private UI ui;
 
@@ -43,6 +45,7 @@ public class GameManager : SerializedMonoBehaviour
         playerController = playerObj.GetComponent<PlayerController>();
         moveGroundLeft = groundObj.GetComponent<MoveLeft>();
         moveCloudsLeft = initalCloudsObj.GetComponent<MoveLeft>();
+        moveRocksLeft = backgroundRocks.GetComponent<MoveLeft>();
         difficultyPopupManager = difficultyManagerPopupObj.GetComponent<DifficultyManager>();
 
         titleScreenUi.SetActive(true);
@@ -60,6 +63,7 @@ public class GameManager : SerializedMonoBehaviour
 
         moveGroundLeft.StartGame();
         moveCloudsLeft.StartGame();
+        moveRocksLeft.StartGame();
         spawnManager.StartSpawning();
         playerController.StartGame();
         difficultyPopupManager.StartGame();
@@ -83,6 +87,7 @@ public class GameManager : SerializedMonoBehaviour
 
         moveGroundLeft.StopGame();
         moveCloudsLeft.StopGame();
+        moveRocksLeft.StopGame();
         spawnManager.StopSpawning();
         playerController.StopGame();
         difficultyPopupManager.StopGame();
