@@ -39,7 +39,7 @@ public class SpawnManager : MonoBehaviour
         StartCoroutine("SpawnEnemyRandomInterval", "SpawnEnemyDrone");
         StartCoroutine("SpawnEnemyRandomInterval", "SpawnObstacle");
         StartCoroutine("SpawnPowerupRandomInterval", "SpawnPowerup");
-        InvokeRepeating("SpawnCloudRandomInterval", startDelay, cloudSpawnInterval);
+        // InvokeRepeating("SpawnCloudRandomInterval", startDelay, cloudSpawnInterval);
     }
     internal void StopSpawning()
     {
