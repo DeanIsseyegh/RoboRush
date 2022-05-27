@@ -1,5 +1,5 @@
 # RoboRush
-First game in Unity. Side scrolling game.
+First game in Unity. Side scrolling game. Available on desktop webgl or mobile Android.
 
 Itch Io build available at: https://deaniss.itch.io/robo-rush
 
