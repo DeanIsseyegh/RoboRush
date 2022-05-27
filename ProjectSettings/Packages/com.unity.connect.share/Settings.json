@@ -21,7 +21,7 @@
             {
                 "type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                 "key": "buildOutputDirList",
-                "value": "{\"m_Value\":\"C:/Users/Dean/Documents/UnityProjects/RoboRush/WebGL Builds/ItchIo_V3;C:/Users/Dean/Documents/UnityProjects/RoboRush/WebGL Builds/Test;C:/Users/Dean/Desktop/Create with Code/Personal Project/WebGL Builds/BuildItchIo_V2;C:/Users/Dean/Desktop/Create with Code/Personal Project/WebGL Builds/Build1/Build2;C:/Users/Dean/Desktop/Create with Code/Personal Project/WebGL Builds/Build1;C:/Users/Dean/Desktop/Create with Code/Personal Project/WebGL Builds;;;;\"}"
+                "value": "{\"m_Value\":\"C:/Users/Dean/Documents/UnityProjects/RoboRush/WebGL Builds/ItchIo_V4;C:/Users/Dean/Documents/UnityProjects/RoboRush/WebGL Builds/ItchIo_V3;C:/Users/Dean/Documents/UnityProjects/RoboRush/WebGL Builds/Test;C:/Users/Dean/Desktop/Create with Code/Personal Project/WebGL Builds/BuildItchIo_V2;C:/Users/Dean/Desktop/Create with Code/Personal Project/WebGL Builds/Build1/Build2;C:/Users/Dean/Desktop/Create with Code/Personal Project/WebGL Builds/Build1;C:/Users/Dean/Desktop/Create with Code/Personal Project/WebGL Builds;;;\"}"
             }
         ]
     }
