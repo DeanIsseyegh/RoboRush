@@ -1,6 +1,8 @@
 # RoboRush
 First game in Unity. Side scrolling game.
 
+Itch Io build available at: https://deaniss.itch.io/robo-rush
+
 WebGL build available at: https://play.unity.com/mg/other/webgl-builds-118641
 
 
