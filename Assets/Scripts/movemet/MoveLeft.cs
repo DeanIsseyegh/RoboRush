@@ -6,6 +6,7 @@ using UnityEngine;
 public class MoveLeft : MonoBehaviour
 {
     [SerializeField] private bool isInGame = false;
+    [SerializeField] private bool shouldDestroyWhenOutOfBounds = true;
 
     public float speed = 5;
     public float xBoundary = -25;
@@ -21,7 +22,7 @@ public class MoveLeft : MonoBehaviour
         if (isInGame)
         {
             transform.Translate(Vector3.left * Time.deltaTime * speed, Space.World);
-            if (transform.position.x < xBoundary && !gameObject.CompareTag("Ground") && !gameObject.CompareTag("GroundParent")) Destroy(gameObject);
+            if (transform.position.x < xBoundary && shouldDestroyWhenOutOfBounds) Destroy(gameObject);
         }
     }
 
